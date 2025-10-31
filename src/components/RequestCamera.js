@@ -1,4 +1,4 @@
-import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import Loading from "./Loading";
 
 export default ({ hasPermissions, requestPermissions }) => {
@@ -8,8 +8,8 @@ export default ({ hasPermissions, requestPermissions }) => {
             :
             // hasPermissions === 'DENIED'
             <View style={styles.container}>
-                <Image source={{ uri: '../utils/camera-icon.png' }} style={styles.image} resizeMode={'contain'}
-                />
+                {/* <Image source={{ uri: { Image: '../utils/camera-icon.png' } }} style={styles.image} resizeMode={'contain'}
+                /> */}
                 <Text style={styles.title}>Necesitamos acceso a tu camara</Text>
                 <Text>Para continuar, por favor otorga acceso a la camara.</Text>
                 <TouchableOpacity style={styles.button}
@@ -29,7 +29,8 @@ const styles = StyleSheet.create({
         alignSelf: 'stretch',
         justifyContent: 'center',
         alignItems: 'center',
-        padding: 20
+        padding: 20,
+        paddingHorizontal: 20
     },
     image: {
         height: 300,

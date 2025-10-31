@@ -12,7 +12,7 @@ export default () => {
         }
         catch (err) {
             console.log('err: ', err)
-            setHasPermission('ERRPR')
+            setHasPermission('ERROR')
         }
     }
     const requestIOSidPermisssions = async () => {
@@ -24,7 +24,7 @@ export default () => {
         }
         catch (err) {
             console.log('err: ', err)
-            setHasPermission('ERRPR')
+            setHasPermission('ERROR')
         }
     }
     const requestPermissions = () => {
@@ -35,7 +35,7 @@ export default () => {
     useEffect(() => {
         setTimeout(() => {
             requestPermissions()
-        }, 2000)
+        }, 1500)
     },)
 
     return (

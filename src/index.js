@@ -9,7 +9,7 @@ export default () => {
         <View style={styles.container} >
             {
                 hasPermissions === 'LOADING' || hasPermissions === 'DENIED' || hasPermissions === 'ERROR'
-                    ? <RequestCamera />
+                    ? <RequestCamera hasPermissions={hasPermissions} requestPermissions={requestPermissions} />
                     : <Camera />
             }
 
