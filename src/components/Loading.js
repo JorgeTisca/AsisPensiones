@@ -1,9 +1,14 @@
-import Animated from 'react-native-reanimated'
-import useLoading from "../hooks/useLoading"
+import { StyleSheet, View } from 'react-native';
 
 export default () => {
-    const { loadingStyles } = useLoading({ color: '#9b59b8' })
-    return (
-        <Animated.View style={loadingStyles} />
-    )
+    return <View style={[styles.loading]} />
 }
+
+const styles = StyleSheet.create({
+    loading: {
+        width: 100,
+        height: 100,
+        backgroundColor: '#9b59b8',
+        borderRadius: 50,
+    }
+});

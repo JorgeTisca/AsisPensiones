@@ -1,18 +1,16 @@
 import { StyleSheet, View } from "react-native";
 import { Camera, RequestCamera } from './components';
-import cameraPermissions from './permissions/cameraPermissions';
+import useCameraPermissions from './permissions/cameraPermissionsReq'; // renombré para que sea un hook
 
 export default () => {
+    const { hasPermissions, requestPermissions, openAppSettings } = useCameraPermissions();
 
-    const { hasPermissions, requestPermissions } = cameraPermissions()
     return (
         <View style={styles.container} >
-            {
-                hasPermissions === 'LOADING' || hasPermissions === 'DENIED' || hasPermissions === 'ERROR'
-                    ? <RequestCamera hasPermissions={hasPermissions} requestPermissions={requestPermissions} />
-                    : <Camera />
+            {hasPermissions !== 'GRANTED'
+                ? <RequestCamera hasPermissions={hasPermissions} requestPermissions={requestPermissions} openAppSettings={openAppSettings} />
+                : <Camera />
             }
-
         </View>
     )
 };
@@ -22,6 +20,6 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: '#ffff'
+        backgroundColor: '#fff'
     },
 });
