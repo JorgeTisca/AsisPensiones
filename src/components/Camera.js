@@ -83,7 +83,7 @@ export default () => {
     })
 
     useDerivedValue(() => {
-        if (progress.value === 10 && !isShow.value) {
+        if (progress.value === 7 && !isShow.value) {
             runOnJS(setShow)(true)
             isShow.value = true
             translateY.value = withSpring(0)
