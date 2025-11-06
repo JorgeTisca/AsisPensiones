@@ -40,7 +40,7 @@ export default ({ progress, handleAddProgress = () => { }, firstQR, setFirstQR, 
 
             scanFrame.value = frame
             if (firstQR === '' || firstQR === value) {
-                if (progress.value < 7) handleAddProgress()
+                if (progress.value < 10) handleAddProgress()
                 if (firstQR === '') {
                     setFirstQR(value)
                     sendToApi(value)

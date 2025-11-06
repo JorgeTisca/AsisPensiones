@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { Linking, StyleSheet, Text, TouchableOpacity, View } from "react-native"
+import { AppState, Linking, StyleSheet, Text, TouchableOpacity, View } from "react-native"
 import Hyperlink from "react-native-hyperlink"
 import Animated, { runOnJS, useDerivedValue, useSharedValue, withSpring } from "react-native-reanimated"
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
@@ -19,6 +19,8 @@ export default () => {
     const { layout, onLayout } = useLayout()
     const [cameraType, setCameraType] = useState('back'/*'back'*/)
     const device = useCameraDevice(cameraType)
+
+    const [isCameraActive, setIsCameraActive] = useState(true)
 
     const progress = useSharedValue(0)
     const isShow = useSharedValue(false)
@@ -43,6 +45,19 @@ export default () => {
         progress.value = 0
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [cameraType])
+    useEffect(() => {
+        const subscription = AppState.addEventListener('change', (nextAppState) => {
+            if (nextAppState === 'active') {
+                console.log("App en primer plano: reactivando cámara")
+                setIsCameraActive(true)
+            } else {
+                console.log("App en background: pausando cámara")
+                setIsCameraActive(false)
+            }
+        })
+
+        return () => subscription.remove()
+    }, [])
 
     useDerivedValue(() => {
         if (translateY.value === 300) {
@@ -57,7 +72,7 @@ export default () => {
             translateY.value = withSpring(300)
             setShow(false)
             isShow.value = false
-        }, 2000)
+        }, 1500)
     }
 
     useDerivedValue(() => {
@@ -68,7 +83,7 @@ export default () => {
     })
 
     useDerivedValue(() => {
-        if (progress.value === 7 && !isShow.value) {
+        if (progress.value === 10 && !isShow.value) {
             runOnJS(setShow)(true)
             isShow.value = true
             translateY.value = withSpring(0)
@@ -79,7 +94,7 @@ export default () => {
             ?
             <>
 
-                <Camera style={StyleSheet.absoluteFill} device={device} isActive={true}
+                <Camera style={StyleSheet.absoluteFill} device={device} isActive={isCameraActive}
                     onLayout={onLayout}
                     torch={flashActived ? "on" : "off"}
                     codeScanner={codeScanner}
